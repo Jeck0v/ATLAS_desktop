@@ -1,7 +1,16 @@
-# Tauri + React + Typescript
+# ATLAS
 
 This template should help get you started developing with Tauri, React and Typescript in Vite.
+### Language
+- React (vitejs)
+- TypeScript
+- TailwindCSS
+- Rust
+- Tauri
+- DSL custom
 
-## Recommended IDE Setup
+---
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+[Work in Progress] 
+
+ATLAS is the orchestration tool that speaks human. Define your stack in readable DSL, deploy anywhere with one command, and get a gorgeous desktop interface for free.

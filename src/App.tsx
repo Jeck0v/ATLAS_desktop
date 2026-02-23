@@ -1,50 +1,37 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
+import { useStore } from "./store";
+import { AppWindow } from "./components/layout/AppWindow";
+import { Dashboard } from "./components/pages/Dashboard";
+import { Projects } from "./components/pages/Projects";
+import { Secrets } from "./components/pages/Secrets";
+import { Configuration } from "./components/pages/Configuration";
+import { Testing } from "./components/pages/Testing";
+import { Settings } from "./components/pages/Settings";
+import { DslEditor } from "./components/pages/DslEditor";
+import { NewProject } from "./components/pages/NewProject";
+
+function PageRouter() {
+  const { page } = useStore();
+
+  switch (page) {
+    case "dashboard":    return <Dashboard />;
+    case "projects":     return <Projects />;
+    case "secrets":      return <Secrets />;
+    case "config":       return <Configuration />;
+    case "testing":      return <Testing />;
+    case "settings":     return <Settings />;
+    case "dsl-editor":   return <DslEditor />;
+    case "new-project":  return <NewProject />;
+    default:             return <Dashboard />;
+  }
+}
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+    <div className="w-screen h-screen flex items-center justify-center bg-transparent">
+      <AppWindow>
+        <PageRouter />
+      </AppWindow>
+    </div>
   );
 }
 
