@@ -1,0 +1,57 @@
+flowchart LR
+    subgraph Pages
+        DB[Dashboard]
+        PR[Projects]
+        PD[Project Detail]
+        NP[New Project]
+        CF[Pre-config]
+        DE[DSL Editor]
+        SC[Secrets]
+        TE[Test & Audit]
+        ST[Settings]
+    end
+
+    subgraph Shared
+        PM[ProdDeployModal]
+        Store[(Zustand Store)]
+    end
+
+    subgraph Data
+        MockD[mockDeployments]
+        MockP[mockProjects]
+        MockS[mockSecrets]
+        MockB[mockBlocks]
+        MockL[mockTestLogs]
+    end
+
+    DB -->|click row| PD
+    PR -->|click card| PD
+    PR -->|New project| NP
+    NP -->|addProject + navigate| DE
+    CF -->|click card| PD
+    PD -->|Edit deployment| DE
+    DE -->|save + Back| PD
+    SC -->|view project| PR
+
+    PD -->|first prod deploy| PM
+    CF -->|first prod deploy| PM
+    DE -->|first prod deploy| PM
+
+    PM -->|reads default provider| Store
+    PM -->|setProjectProdConfig| Store
+    ST -->|setSettingsProdProvider| Store
+
+    Store -->|page / selectedProj| Pages
+    Store -->|projects| PR
+    Store -->|projects| CF
+    Store -->|projects| PD
+    Store -->|settingsProdProvider| PM
+
+    MockD --> DB
+    MockP --> PR
+    MockP --> CF
+    MockS --> SC
+    MockB --> DE
+    MockB --> CF
+    MockL --> TE
+    MockP --> TE
