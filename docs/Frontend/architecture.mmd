@@ -1,0 +1,49 @@
+graph TB
+    subgraph Tauri["Tauri 2 (Native Window)"]
+        WinAPI[Window API\nclose / minimize / toggleMaximize / startDragging]
+        Rust[Rust Backend\nlib.rs / main.rs]
+    end
+
+    subgraph Frontend["React Frontend (Vite, port 1420)"]
+        subgraph Shell["Layout Shell"]
+            AW[AppWindow\n1100x680, radius 30px]
+            TB[TitleBar\ndrag + traffic lights]
+            SB[Sidebar\nnavigation]
+        end
+
+        subgraph StateLayer["State Layer"]
+            Store[(Zustand Store\npage / selectedProj\nprojects / settingsProdProvider)]
+            Mock[mock.ts\nprojects / secrets / blocks\ndeployments / testLogs]
+        end
+
+        subgraph Atoms["UI Atoms"]
+            EnvPill
+            StatusDot
+            Toggle
+            ProdDeployModal
+            MiniSparkline
+        end
+
+        subgraph Pages["Pages"]
+            Dashboard
+            Projects
+            ProjectDetail
+            NewProject
+            Configuration
+            DslEditor
+            Secrets
+            Testing
+            Settings
+        end
+    end
+
+    TB -->|startDragging / close / minimize| WinAPI
+    SB -->|setPage| Store
+    Pages -->|read + write| Store
+    Mock -->|initial data| Store
+    Pages -->|render| Atoms
+    AW --> TB
+    AW --> SB
+    AW --> Pages
+    ProdDeployModal -->|setProjectProdConfig\nsetSettingsProdProvider| Store
+    Settings -->|setSettingsProdProvider| Store

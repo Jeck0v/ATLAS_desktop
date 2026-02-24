@@ -29,7 +29,7 @@ export function Sidebar() {
   return (
     <div className="w-[188px] bg-ink border-r border-white/[0.07] p-5 flex flex-col flex-shrink-0">
       {/* Logo */}
-      <div className="text-xl font-bold tracking-wide text-white mb-7 select-none">
+      <div className="text-xl font-bold tracking-wide text-white mb-7 select-none text-center">
         ATLAS
       </div>
 
